@@ -1,0 +1,4 @@
+12
+19
+12
+1 and 3, and this can only be true if the if statement has a way to break out of the current environment and return something
