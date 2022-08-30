@@ -95,81 +95,121 @@ def accuracy(typed, reference):
     reference_words = split(reference)
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+    accuracyCounter = 0
+    if typed_words == [] and reference_words == []:
+        return 100.0
+    elif len(reference_words) >= len(typed_words):
+        for i, element in enumerate(typed_words):
+            if typed_words[i] == reference_words[i]:
+                accuracyCounter += 1
+    else:
+        for i, element in enumerate(reference_words):
+            if typed_words[i] == reference_words[i]:
+                accuracyCounter += 1
+    accuracyPercent = 0.0 if typed_words == [] else 100 * accuracyCounter / len(typed_words)
+    return accuracyPercent
     # END PROBLEM 3
 
-run_docstring_examples(accuracy, globals(), True) 
 
-# def wpm(typed, elapsed):
-#     """Return the words-per-minute (WPM) of the TYPED string.
+def wpm(typed, elapsed):
+    """Return the words-per-minute (WPM) of the TYPED string.
 
-#     Arguments:
-#         typed: an entered string
-#         elapsed: an amount of time in seconds
+    Arguments:
+        typed: an entered string
+        elapsed: an amount of time in seconds
 
-#     >>> wpm('hello friend hello buddy hello', 15)
-#     24.0
-#     >>> wpm('0123456789',60)
-#     2.0
-#     """
-#     assert elapsed > 0, 'Elapsed time must be positive'
-#     # BEGIN PROBLEM 4
-#     "*** YOUR CODE HERE ***"
-#     # END PROBLEM 4
+    >>> wpm('hello friend hello buddy hello', 15)
+    24.0
+    >>> wpm('0123456789',60)
+    2.0
+    """
+    assert elapsed > 0, 'Elapsed time must be positive'
+    # BEGIN PROBLEM 4
+    "*** YOUR CODE HERE ***"
+    word_count = len(typed)/5 
+    words_per_minute = word_count / (elapsed / 60) 
+    return words_per_minute
+    # END PROBLEM 4
 
 
 # ###########
 # # Phase 2 #
 # ###########
 
-# def autocorrect(typed_word, word_list, diff_function, limit):
-#     """Returns the element of WORD_LIST that has the smallest difference
-#     from TYPED_WORD. Instead returns TYPED_WORD if that difference is greater
-#     than LIMIT.
+def autocorrect(typed_word, word_list, diff_function, limit):
+    """Returns the element of WORD_LIST that has the smallest difference
+    from TYPED_WORD. Instead returns TYPED_WORD if that difference is greater
+    than LIMIT.
 
-#     Arguments:
-#         typed_word: a string representing a word that may contain typos
-#         word_list: a list of strings representing reference words
-#         diff_function: a function quantifying the difference between two words
-#         limit: a number
+    Arguments:
+        typed_word: a string representing a word that may contain typos
+        word_list: a list of strings representing reference words
+        diff_function: a function quantifying the difference between two words
+        limit: a number
 
-#     >>> ten_diff = lambda w1, w2, limit: 10 # Always returns 10
-#     >>> autocorrect("hwllo", ["butter", "hello", "potato"], ten_diff, 20)
-#     'butter'
-#     >>> first_diff = lambda w1, w2, limit: (1 if w1[0] != w2[0] else 0) # Checks for matching first char
-#     >>> autocorrect("tosting", ["testing", "asking", "fasting"], first_diff, 10)
-#     'testing'
-#     """
-#     # BEGIN PROBLEM 5
-#     "*** YOUR CODE HERE ***"
-#     # END PROBLEM 5
+    >>> ten_diff = lambda w1, w2, limit: 10 # Always returns 10
+    >>> autocorrect("hwllo", ["butter", "hello", "potato"], ten_diff, 20)
+    'butter'
+    >>> first_diff = lambda w1, w2, limit: (1 if w1[0] != w2[0] else 0) # Checks for matching first char
+    >>> autocorrect("tosting", ["testing", "asking", "fasting"], first_diff, 10)
+    'testing'
+    """
+    # BEGIN PROBLEM 5
+    "*** YOUR CODE HERE ***"
+    if typed_word in word_list:
+        return typed_word
+    else:
+        closest_match = ""
+        min_word_length = limit
+        for word in word_list:
+            difference = diff_function(typed_word, word, limit)
+            if difference < min_word_length:
+                closest_match = word
+                min_word_length = difference
+        return closest_match
+    # END PROBLEM 5
 
 
-# def feline_fixes(typed, reference, limit):
-#     """A diff function for autocorrect that determines how many letters
-#     in TYPED need to be substituted to create REFERENCE, then adds the difference in
-#     their lengths and returns the result.
+def feline_fixes(typed, reference, limit):
+    """A diff function for autocorrect that determines how many letters
+    in TYPED need to be substituted to create REFERENCE, then adds the difference in
+    their lengths and returns the result.
 
-#     Arguments:
-#         typed: a starting word
-#         reference: a string representing a desired goal word
-#         limit: a number representing an upper bound on the number of chars that must change
+    Arguments:
+        typed: a starting word
+        reference: a string representing a desired goal word
+        limit: a number representing an upper bound on the number of chars that must change
 
-#     >>> big_limit = 10
-#     >>> feline_fixes("nice", "rice", big_limit)    # Substitute: n -> r
-#     1
-#     >>> feline_fixes("range", "rungs", big_limit)  # Substitute: a -> u, e -> s
-#     2
-#     >>> feline_fixes("pill", "pillage", big_limit) # Don't substitute anything, length difference of 3.
-#     3
-#     >>> feline_fixes("roses", "arose", big_limit)  # Substitute: r -> a, o -> r, s -> o, e -> s, s -> e
-#     5
-#     >>> feline_fixes("rose", "hello", big_limit)   # Substitute: r->h, o->e, s->l, e->l, length difference of 1.
-#     5
-#     """
-#     # BEGIN PROBLEM 6
-#     assert False, 'Remove this line'
-#     # END PROBLEM 6
+    >>> big_limit = 10
+    >>> feline_fixes("nice", "rice", big_limit)    # Substitute: n -> r
+    1
+    >>> feline_fixes("range", "rungs", big_limit)  # Substitute: a -> u, e -> s
+    2
+    >>> feline_fixes("pill", "pillage", big_limit) # Don't substitute anything, length difference of 3.
+    3
+    >>> feline_fixes("roses", "arose", big_limit)  # Substitute: r -> a, o -> r, s -> o, e -> s, s -> e
+    5
+    >>> feline_fixes("rose", "hello", big_limit)   # Substitute: r->h, o->e, s->l, e->l, length difference of 1.
+    5
+    """
+    # BEGIN PROBLEM 6
+    char_difference = abs(len(typed) - len(reference))
+    smaller_word = min([typed, reference])
+    split_typed = [x for x in typed]
+    split_reference = [x for x in reference]
+    def compare_words(split_typed,split_reference):
+        if split_typed == []:
+            return char_difference
+        elif split_typed[0] == split_reference[0] :
+            return compare_words(split_typed[1:],split_reference[1:])
+        else:
+            return 1 + compare_words(split_typed[1:],split_reference[1:])
 
+    return compare_words(split_typed,split_reference)
+
+    # END PROBLEM 6
+
+run_docstring_examples(feline_fixes, globals(), True) 
 
 # def hidden_kittens(typed, reference, limit):
 #     """A diff function that returns the number of times REFERENCE appears as a
