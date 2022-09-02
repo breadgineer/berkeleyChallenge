@@ -1,5 +1,4 @@
-import Tree
-
+from Tree import Tree
 from doctest import run_docstring_examples
 
 def height(t):
@@ -13,7 +12,9 @@ def height(t):
     3
     """
     "*** YOUR CODE HERE ***"
-    level = 0
-    def go_through_tree(t):
+    if t.is_leaf():
+        return 0
+    else:
+        return 1 + max([height(branch) for branch in t.branches])
 
 run_docstring_examples(height, globals(), True)
