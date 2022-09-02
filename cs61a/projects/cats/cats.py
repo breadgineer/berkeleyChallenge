@@ -211,27 +211,34 @@ def feline_fixes(typed, reference, limit):
 
 run_docstring_examples(feline_fixes, globals(), True) 
 
-# def hidden_kittens(typed, reference, limit):
-#     """A diff function that returns the number of times REFERENCE appears as a
-#     (potentially non-continuous) substring of TYPED. If REFERENCE appears 0 or > LIMIT times
-#     within TYPED, return a number greater than LIMIT.
+def hidden_kittens(typed, reference, limit):
+    """A diff function that returns the number of times REFERENCE appears as a
+    (potentially non-continuous) substring of TYPED. If REFERENCE appears 0 or > LIMIT times
+    within TYPED, return a number greater than LIMIT.
 
-#     Arguments:
-#         typed: a starting word
-#         reference: a string representing a desired goal word
-#         limit: a number representing an upper bound on the number of substrings found
+    Arguments:
+        typed: a starting word
+        reference: a string representing a desired goal word
+        limit: a number representing an upper bound on the number of substrings found
 
-#     >>> limit = 5
-#     >>> hidden_kittens("ccatgts", "cats", limit)
-#     4
-#     >>> hidden_kittens("123123123", "123", limit) > limit # 123 appears 10 times in 123123123
-#     True
-#     >>> hidden_kittens("hiddnehddi", "hidden", limit) > limit # hidden appears 0 times in hiddnehddi
-#     True
-#     """
-#     # BEGIN PROBLEM 7
-#     "*** YOUR CODE HERE ***"
-#     # END PROBLEM 7
+    >>> limit = 5
+    >>> hidden_kittens("ccatgts", "cats", limit)
+    4
+    >>> hidden_kittens("123123123", "123", limit) > limit # 123 appears 10 times in 123123123
+    True
+    >>> hidden_kittens("hiddnehddi", "hidden", limit) > limit # hidden appears 0 times in hiddnehddi
+    True
+    """
+    # BEGIN PROBLEM 7
+    "*** YOUR CODE HERE ***"
+    typed_list = [x for x in typed]
+    def find_hidden_kittens(typed_ist,word_piece):
+        if typed_ist == []:
+            return 0
+        elif word_piece == reference:
+            return 1 + find_hidden_kittens(typed_ist,word_piece)
+
+    # END PROBLEM 7
 
 
 # def final_diff(typed, reference, limit):
