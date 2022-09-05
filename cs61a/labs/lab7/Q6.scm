@@ -1,0 +1,6 @@
+(define (ascending? lst)
+  (cond ((or (null? lst) (null? (cdr lst))) #t)
+        ((> (car lst) (car (cdr lst))) #f)
+        (else (ascending? (cdr lst)))
+  )
+)
