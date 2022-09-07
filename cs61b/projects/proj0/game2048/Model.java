@@ -159,9 +159,34 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for (Tile tile : b) {
+            if (tile != null && tile.value() == MAX_PIECE){
+                    return true;
+                }
+        }
         return false;
     }
 
+    public static boolean equalAdjacentTiles(Board b){
+        for(int col = 0; col < b.size(); col++ ){
+            for(int row = 0; row < b.size(); row++ ){
+                int currentTileValue = b.tile(col,row).value();
+                int upTileValue = (row-1 > 0) ? b.tile(col,row-1).value() : 0;
+                int downTileValue = (row+1 < 4) ? b.tile(col,row+1).value() : 0;
+                int leftTileValue = (col-1 > 0) ? b.tile(col-1,row).value() : 0;
+                int rightTileValue = (col+1 < 4) ? b.tile(col+1,row).value() : 0;
+                boolean equalAdjacentValueCondition = (currentTileValue == upTileValue) ||
+                        (currentTileValue == downTileValue) ||
+                        (currentTileValue == leftTileValue) ||
+                        (currentTileValue == rightTileValue);
+                if (equalAdjacentValueCondition) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
     /**
      * Returns true if there are any valid moves on the board.
      * There are two ways that there can be valid moves:
@@ -170,7 +195,7 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
-        return false;
+        return emptySpaceExists(b) || equalAdjacentTiles(b);
     }
 
 
