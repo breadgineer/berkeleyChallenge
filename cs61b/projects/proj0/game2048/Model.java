@@ -110,11 +110,25 @@ public class Model extends Observable {
      * */
     public boolean tilt(Side side) {
         boolean changed;
+        boolean tileMoved;
         changed = false;
 
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        this.board.setViewingPerspective(side);
+        Tile tile = this.board.tile(3, 1);
+//        for (Tile tile : this.board){
+            if (tile != null) {
+                tileMoved = this.board.move(tile.col(), tile.row(), tile);
+                if (tileMoved) {
+                    changed = true;
+                }
+//            }
+        }
+
+        this.board.setViewingPerspective(Side.NORTH);
+
 
         checkGameOver();
         if (changed) {

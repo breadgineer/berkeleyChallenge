@@ -1,0 +1,17 @@
+StringList L = new StringList("eat", null);
+L = new StringList("should", L);
+L = new StringList("you", L);
+L = new StringList("sometimes", L);
+StringList M = L.rest;
+StringList R = new StringList("many", null);
+R = new StringList("potatoes", R);
+R.rest.rest = R;
+M.rest.rest.rest = R.rest;
+L.rest.rest = L.rest.rest.rest;
+L = M.rest;
+
+L = [sometimes]->[you]->[should]->[eat]->[null] (4)
+M = [you]->[should]->[eat]->[null] (5)
+R = [potatoes]->[many]->[potatoes]->[many]->[null] (9)
+M => [you]->[should]->[eat]->[many]->[potatoes]->[many]->[null]
+L => [should]->[eat]->[many]->[potatoes]->[many]->[null]
